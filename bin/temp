@@ -1,0 +1,4 @@
+#/bin/bash
+
+temp=$(sensors | grep 'edge' | cut -d' ' -f10)
+printf "[ 🌡%s ]" "$temp"

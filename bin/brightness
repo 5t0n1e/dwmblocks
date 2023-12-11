@@ -1,0 +1,7 @@
+#/bin/bash
+# display current brightness
+
+# get first two digits of brightness value
+brightnum=$(xbacklight -get)
+brightness=$(printf "${brightnum%.*}")
+printf "[ ☀%3s ]" "$brightness"

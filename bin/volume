@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Prints the current volume or 🔇 if muted.
+
+mute() {
+	echo "[ 🔇 ]"
+    exit
+}
+amixer sget Master | grep "off" &>/dev/null
+if [ $? -eq 0 ]
+then
+	mute
+fi
+
+vol="$(amixer sget Master | tail -1 | cut -d'[' -f2 | cut -d']' -f1)"
+vol=${vol/"%"/""}
+case 1 in
+	$((vol >= 70)) ) icon="🔊" ;;
+	$((vol >= 30)) ) icon="🔉" ;;
+	$((vol >= 1)) ) icon="🔈" ;;
+	$((vol == 0)) ) mute ;;
+esac
+
+printf "[ %s%3s ]" "$icon" "$vol"
